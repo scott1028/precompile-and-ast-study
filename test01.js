@@ -32,7 +32,26 @@ bt.default(ast, {
             }
 
             var filePath = path.node.arguments[0].value;
-            path.replaceWithSourceString('console.log(\'' + filePath + '\')');
+            
+            // case-1
+            // path.replaceWithSourceString('console.log(\'' + filePath + '\')');
+
+            // case-2
+            var $$code = `
+                console.log(1);
+                let a = 1;
+                console.debug(2);
+                for(var i = 0; i < 10; i++){
+                    console.log(i + 10);
+                }
+                for(let j = 0; j < 20; j++)
+                    console.log(j);
+            `;
+            var $$act = babylon.parse($$code, {
+                sourceType: 'module'
+            });
+            path.node.type = 'File';
+            path.node.program = $$act.program;
         }
     }
 });
