@@ -3,13 +3,14 @@
 const babylon = require('babylon');
 const bg = require('babel-generator');
 const bt = require('babel-traverse');
+const fs = require("fs");
 
 const code = `
     function add(a, b){
         return a + b;
     }
 
-    include('./aa.js');
+    include('./lib01.js');
 `;
 
 
@@ -31,22 +32,23 @@ bt.default(ast, {
                 throw new Error('Syntax has some error.');
             }
 
-            var filePath = path.node.arguments[0].value;
-            
             // case-1
             // path.replaceWithSourceString('console.log(\'' + filePath + '\')');
 
             // case-2
-            var $$code = `
-                console.log(1);
-                let a = 1;
-                console.debug(2);
-                for(var i = 0; i < 10; i++){
-                    console.log(i + 10);
-                }
-                for(let j = 0; j < 20; j++)
-                    console.log(j);
-            `;
+            // var $$code = `
+            //     console.log(1);
+            //     let a = 1;
+            //     console.debug(2);
+            //     for(var i = 0; i < 10; i++){
+            //         console.log(i + 10);
+            //     }
+            //     for(let j = 0; j < 20; j++)
+            //         console.log(j);
+            // `;
+            var filePath = path.node.arguments[0].value;
+            var $$code = fs.readFileSync(filePath, "utf-8");
+            console.log($$code);
             var $$act = babylon.parse($$code, {
                 sourceType: 'module'
             });
