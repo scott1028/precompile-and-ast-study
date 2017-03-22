@@ -54,6 +54,9 @@ bt.default(ast, {
             });
             path.node.type = 'File';
             path.node.program = $$act.program;
+
+            // debug current code to generate output
+            console.log(bg.default($$act).code);
         }
     }
 });
@@ -67,3 +70,21 @@ console.log('==========================================');
 console.log(output.code);
 console.log('==========================================');
 console.log(output);
+
+
+// function handler($$code){
+//     var $$act = babylon.parse($$code, {
+//         sourceType: 'module'
+//     });
+
+//     bt.default($$ast, {
+//         enter(path) {
+//             if(path.node.type === 'CallExpression' && path.node.callee.name === 'include'){
+//                 // next = true;
+
+//                 var filePath = path.node.arguments[0].value;
+//                 var $$code = fs.readFileSync(filePath, "utf-8");
+//             }
+//         }
+//     });
+// };
